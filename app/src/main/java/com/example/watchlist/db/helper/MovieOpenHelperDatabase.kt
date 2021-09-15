@@ -28,13 +28,12 @@ class MovieOpenHelperDatabase private constructor(context: Context) : SQLiteOpen
 
     private val scope = CoroutineScope(Dispatchers.IO + SupervisorJob())
 
-    val movieDao = MovieOpenHelperDao.create(this)
+    val movieDao by lazy { MovieOpenHelperDao.create(this) }
 
     override fun onCreate(db: SQLiteDatabase) {
         db.execSQL(SQL_CREATE)
 
         scope.launch {
-            val movieDao = MovieOpenHelperDao.create(this@MovieOpenHelperDatabase) // ???
             MovieTestData.data.forEach { movie ->
                 movieDao.insertMovie(movie)
             }
