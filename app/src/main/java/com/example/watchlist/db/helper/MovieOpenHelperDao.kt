@@ -17,17 +17,14 @@ class MovieOpenHelperDao private constructor(db: MovieOpenHelperDatabase) : Movi
 
     private val readableDatabase = db.readableDatabase
 
-    private val changeListener = MutableLiveData(0)
+    private val dbChangeListener = MutableLiveData(0)
 
     private fun changed() {
-        changeListener.postValue(changeListener.value!! + 1)
+        dbChangeListener.postValue(0)
     }
 
-    private val allMovies: LiveData<List<Movie>> =
-        changeListener.map { getAllMoviesInner() }
-
     override fun getAllMovies(): LiveData<List<Movie>> {
-        return allMovies
+        return dbChangeListener.map { getAllMoviesInner() }
     }
 
     private fun getAllMoviesInner(): List<Movie> {
