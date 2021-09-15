@@ -17,9 +17,13 @@ class MainViewModel : ViewModel() {
 
     val sortOrder = MutableLiveData(DEFAULT_SORT_ORDER)
 
+    val dbMode = MutableLiveData(DEFAULT_DB_MODE)
+
     private val movieRepository: MovieRepository by locateLazy()
 
-    private val movies = movieRepository.getAllMovies()
+    private val movies = dbMode.switchMap {
+        movieRepository.getAllMovies()
+    }
 
     fun insertMovie(movie: Movie) = viewModelScope.launch(Dispatchers.IO) {
         movieRepository.insertMovie(movie)

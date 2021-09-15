@@ -11,6 +11,7 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.preference.PreferenceManager
+import com.example.watchlist.DEFAULT_DB_MODE
 import com.example.watchlist.DEFAULT_SORT_BY
 import com.example.watchlist.DEFAULT_SORT_ORDER
 import com.example.watchlist.R
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
         when (key) {
             "pref_sort_by" -> mainViewModel.sortBy.postValue(preferences.getString(key, DEFAULT_SORT_BY))
             "pref_sort_order" -> mainViewModel.sortOrder.postValue(preferences.getString(key, DEFAULT_SORT_ORDER))
+            "pref_db_mode" -> mainViewModel.dbMode.postValue(preferences.getString(key, DEFAULT_DB_MODE))
         }
     }
 

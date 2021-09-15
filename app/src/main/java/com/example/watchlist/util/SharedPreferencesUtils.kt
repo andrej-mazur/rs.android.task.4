@@ -30,7 +30,7 @@ class SharedPreferencesUtils(private val sharedPreferences: SharedPreferences) {
     }
 
     private fun getDbMode(): String? {
-        return sharedPreferences.getString("pref_db_mode", DEFAULT_DB_MODE_ROOM)
+        return sharedPreferences.getString("pref_db_mode", DEFAULT_DB_MODE)
     }
 
     fun isDbModeRoom(): Boolean {
