@@ -9,8 +9,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.example.watchlist.R
 import com.example.watchlist.databinding.FragmentEditBinding
 import com.example.watchlist.db.Movie
+import com.example.watchlist.setToolbarTitle
 import com.example.watchlist.viewmodel.MainViewModel
 
 class EditFragment : Fragment() {
@@ -36,6 +38,10 @@ class EditFragment : Fragment() {
         if (edit) {
             binding.title.setText(args.movieTitle)
             binding.year.setText(args.movieYear.toString())
+
+            setToolbarTitle(R.string.edit_movie)
+        } else {
+            setToolbarTitle(R.string.add_movie)
         }
 
         return binding.root

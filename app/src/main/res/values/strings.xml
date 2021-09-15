@@ -1,6 +1,14 @@
 <resources>
     <string name="app_name">Watchlist</string>
+
+    <!-- menu -->
     <string name="action_settings">Settings</string>
+
+    <!-- titles -->
+    <string name="movies">Movies</string>
+    <string name="add_movie">Add movie</string>
+    <string name="edit_movie">Edit movie</string>
+    <string name="settings">Settings</string>
 
     <!-- navigation -->
     <string name="next">Next</string>
@@ -12,7 +20,7 @@
 
     <string name="sort_by">Sort By</string>
     <string name="sort_order">Sort Order</string>
-    <string name="db_mode">Mode</string>
+    <string name="db_mode">Database Mode</string>
 
     <string name="sort_by_title">Title</string>
     <string name="sort_by_year">Year</string>

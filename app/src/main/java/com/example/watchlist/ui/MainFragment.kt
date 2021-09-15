@@ -8,8 +8,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.watchlist.R
 import com.example.watchlist.databinding.FragmentMainBinding
 import com.example.watchlist.db.Movie
+import com.example.watchlist.setToolbarTitle
 import com.example.watchlist.ui.main.MovieAdapter
 import com.example.watchlist.ui.main.MovieAdapterListener
 import com.example.watchlist.viewmodel.MainViewModel
@@ -40,6 +42,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+        setToolbarTitle(R.string.movies)
         return binding.root
     }
 

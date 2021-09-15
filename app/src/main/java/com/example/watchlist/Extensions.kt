@@ -1,7 +1,10 @@
 package com.example.watchlist
 
+import androidx.annotation.StringRes
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
+import com.example.watchlist.ui.MainActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -19,4 +22,8 @@ fun <T> LiveData<T>.debounce(duration: Long = 1000L, coroutineScope: CoroutineSc
             mediator.value = source.value
         }
     }
+}
+
+fun Fragment.setToolbarTitle(@StringRes resId: Int) {
+    (activity as? MainActivity)?.supportActionBar?.title = getString(resId)
 }
