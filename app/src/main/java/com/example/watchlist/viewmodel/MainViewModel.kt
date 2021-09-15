@@ -5,6 +5,7 @@ import com.example.watchlist.*
 import com.example.watchlist.db.Movie
 import com.example.watchlist.db.MovieRepository
 import com.example.watchlist.di.locateLazy
+import com.example.watchlist.livedata.SharedPreferenceLiveData
 import com.example.watchlist.util.SharedPreferencesUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,11 +14,11 @@ class MainViewModel : ViewModel() {
 
     private val sharedPreferencesUtils: SharedPreferencesUtils by locateLazy()
 
-    val sortBy = MutableLiveData(DEFAULT_SORT_BY)
+    private val sortBy = SharedPreferenceLiveData("pref_sort_by", DEFAULT_SORT_BY)
 
-    val sortOrder = MutableLiveData(DEFAULT_SORT_ORDER)
+    private val sortOrder = SharedPreferenceLiveData("pref_sort_order", DEFAULT_SORT_ORDER)
 
-    val dbMode = MutableLiveData(DEFAULT_DB_MODE)
+    private val dbMode = SharedPreferenceLiveData("pref_db_mode", DEFAULT_DB_MODE)
 
     private val movieRepository: MovieRepository by locateLazy()
 
