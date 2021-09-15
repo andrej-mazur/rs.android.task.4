@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/main_fragment">
+
+    <fragment
+        android:id="@+id/main_fragment"
+        android:name="com.example.watchlist.ui.MainFragment"
+        tools:layout="@layout/fragment_main">
+
+        <action
+            android:id="@+id/action_main_to_edit"
+            app:destination="@id/edit_fragment" />
+
+        <action
+            android:id="@+id/action_main_to_edit_empty"
+            app:destination="@id/edit_fragment">
+            <argument
+                android:name="movieId"
+                android:defaultValue="0L" />
+            <argument
+                android:name="movieTitle"
+                android:defaultValue="@null" />
+            <argument
+                android:name="movieYear"
+                android:defaultValue="0" />
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/edit_fragment"
+        android:name="com.example.watchlist.ui.EditFragment"
+        tools:layout="@layout/fragment_edit">
+
+        <action
+            android:id="@+id/action_edit_to_main"
+            app:destination="@id/main_fragment"
+            app:popUpTo="@id/main_fragment" />
+        <argument
+            android:name="movieId"
+            app:argType="long" />
+        <argument
+            android:name="movieTitle"
+            app:argType="string"
+            app:nullable="true" />
+        <argument
+            android:name="movieYear"
+            app:argType="integer" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/preferences_fragment"
+        android:name="com.example.watchlist.ui.PreferencesFragment" />
+
+    <action
+        android:id="@+id/action_to_settings"
+        app:destination="@id/preferences_fragment" />
+</navigation>

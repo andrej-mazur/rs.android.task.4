@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/sort_category">
+
+        <ListPreference
+            android:defaultValue="TITLE"
+            android:entries="@array/sort_by"
+            android:entryValues="@array/sort_by_values"
+            android:key="pref_sort_by"
+            android:summary="%s"
+            android:title="@string/sort_by" />
+
+        <ListPreference
+            android:defaultValue="ASC"
+            android:entries="@array/sort_order"
+            android:entryValues="@array/sort_order_values"
+            android:key="pref_sort_order"
+            android:summary="%s"
+            android:title="@string/sort_order" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/database_category">
+        <ListPreference
+            android:defaultValue="ROOM"
+            android:entries="@array/db_mode"
+            android:entryValues="@array/db_mode_values"
+            android:key="pref_db_mode"
+            android:summary="%s"
+            android:title="@string/db_mode" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

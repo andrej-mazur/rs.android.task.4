@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">Watchlist</string>
+    <string name="action_settings">Settings</string>
+
+    <!-- navigation -->
+    <string name="next">Next</string>
+    <string name="save">Save</string>
+
+    <!-- preferences -->
+    <string name="sort_category">Sort</string>
+    <string name="database_category">Database</string>
+
+    <string name="sort_by">Sort By</string>
+    <string name="sort_order">Sort Order</string>
+    <string name="db_mode">Mode</string>
+
+    <string name="sort_by_title">Title</string>
+    <string name="sort_by_year">Year</string>
+
+    <string name="order_asc">Asc</string>
+    <string name="order_desc">Desc</string>
+
+    <string name="mode_room">Room</string>
+    <string name="mode_sqlite_open_helper">SQLiteOpenHelper</string>
+
+</resources>

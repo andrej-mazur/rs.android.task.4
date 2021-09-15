@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- sort by -->
+    <string-array name="sort_by">
+        <item>@string/sort_by_title</item>
+        <item>@string/sort_by_year</item>
+    </string-array>
+
+    <string-array name="sort_by_values">
+        <item>TITLE</item>
+        <item>YEAR</item>
+    </string-array>
+
+    <!-- sort order -->
+    <string-array name="sort_order">
+        <item>@string/order_asc</item>
+        <item>@string/order_desc</item>
+    </string-array>
+
+    <string-array name="sort_order_values">
+        <item>ASC</item>
+        <item>DESC</item>
+    </string-array>
+
+    <!-- sort order -->
+    <string-array name="db_mode">
+        <item>@string/mode_room</item>
+        <item>@string/mode_sqlite_open_helper</item>
+    </string-array>
+
+    <string-array name="db_mode_values">
+        <item>ROOM</item>
+        <item>SQLITE_OPEN_HELPER</item>
+    </string-array>
+</resources>
