@@ -3,6 +3,7 @@ package com.example.watchlist.db.helper
 import android.content.ContentValues
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.map
 import com.example.watchlist.db.Movie
 import com.example.watchlist.db.MovieDao
 import com.example.watchlist.db.helper.MovieOpenHelperDatabase.Companion.COLUMN_NAME_ID
@@ -16,8 +17,20 @@ class MovieOpenHelperDao private constructor(db: MovieOpenHelperDatabase) : Movi
 
     private val readableDatabase = db.readableDatabase
 
+    private val changeListener = MutableLiveData(0)
+
+    private fun changed() {
+        changeListener.postValue(changeListener.value!! + 1)
+    }
+
+    private val allMovies: LiveData<List<Movie>> =
+        changeListener.map { getAllMoviesInner() }
+
     override fun getAllMovies(): LiveData<List<Movie>> {
-        val result = MutableLiveData<List<Movie>>()
+        return allMovies
+    }
+
+    private fun getAllMoviesInner(): List<Movie> {
         val projection = arrayOf(COLUMN_NAME_ID, COLUMN_NAME_TITLE, COLUMN_NAME_YEAR)
         val cursor = readableDatabase.query(TABLE_NAME, projection, null, null, null, null, null)
         val movies = mutableListOf<Movie>()
@@ -30,8 +43,7 @@ class MovieOpenHelperDao private constructor(db: MovieOpenHelperDatabase) : Movi
             }
             close()
         }
-        result.postValue(movies)
-        return result
+        return movies
     }
 
     override suspend fun insertMovie(movie: Movie) {
@@ -40,6 +52,7 @@ class MovieOpenHelperDao private constructor(db: MovieOpenHelperDatabase) : Movi
             put(COLUMN_NAME_YEAR, movie.year)
         }
         writableDatabase.insert(TABLE_NAME, null, values)
+        changed()
     }
 
     override suspend fun updateMovie(movie: Movie) {
@@ -50,12 +63,14 @@ class MovieOpenHelperDao private constructor(db: MovieOpenHelperDatabase) : Movi
         val selection = "$COLUMN_NAME_ID = ?"
         val selectionArgs = arrayOf(movie.id.toString())
         writableDatabase.update(TABLE_NAME, values, selection, selectionArgs)
+        changed()
     }
 
     override suspend fun deleteMovie(movie: Movie) {
         val selection = "$COLUMN_NAME_ID LIKE ?"
         val selectionArgs = arrayOf(movie.id.toString())
         writableDatabase.delete(TABLE_NAME, selection, selectionArgs)
+        changed()
     }
 
     companion object {

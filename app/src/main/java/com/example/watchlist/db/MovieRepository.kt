@@ -9,7 +9,7 @@ class MovieRepository(
     private val openHelperDb: MovieOpenHelperDatabase,
 ) {
 
-    private val dao get() = roomDb.movieDao
+    private val dao get() = openHelperDb.movieDao
 
     fun getAllMovies(): LiveData<List<Movie>> = dao.getAllMovies()
 
