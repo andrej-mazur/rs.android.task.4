@@ -1,31 +1,26 @@
 package com.example.watchlist.viewmodel
 
-import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import com.example.watchlist.*
 import com.example.watchlist.db.Movie
 import com.example.watchlist.db.MovieRepository
 import com.example.watchlist.di.locateLazy
 import com.example.watchlist.livedata.CombinedLiveData
 import com.example.watchlist.livedata.SharedPreferenceLiveData
-import com.example.watchlist.util.SharedPreferencesUtils
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainViewModel : ViewModel() {
 
-    private val sharedPreferencesUtils: SharedPreferencesUtils by locateLazy()
+    private val dbMode = SharedPreferenceLiveData(PREF_DB_MODE, DEFAULT_DB_MODE)
 
-    private val sortBy = SharedPreferenceLiveData("pref_sort_by", DEFAULT_SORT_BY)
+    private val sortBy = SharedPreferenceLiveData(PREF_SORT_BY, DEFAULT_SORT_BY)
 
-    private val sortOrder = SharedPreferenceLiveData("pref_sort_order", DEFAULT_SORT_ORDER)
-
-    private val dbMode = SharedPreferenceLiveData("pref_db_mode", DEFAULT_DB_MODE)
+    private val sortOrder = SharedPreferenceLiveData(PREF_SORT_ORDER, DEFAULT_SORT_ORDER)
 
     private val movieRepository: MovieRepository by locateLazy()
-
-    private val movies = dbMode.switchMap {
-        movieRepository.getAllMovies()
-    }
 
     fun insertMovie(movie: Movie) = viewModelScope.launch(Dispatchers.IO) {
         movieRepository.insertMovie(movie)
@@ -39,23 +34,9 @@ class MainViewModel : ViewModel() {
         movieRepository.deleteMovie(movie)
     }
 
-    val mediatorMovies = CombinedLiveData(movies, sortBy, sortOrder).debounce(100L, viewModelScope)
-
-    val sortedMovies = Transformations.map(mediatorMovies) { (movies, sortBy, sortOrder) ->
-        if (movies == null) {
-            return@map movies
+    val movies = CombinedLiveData(dbMode, sortBy, sortOrder)
+        .debounce(100L, viewModelScope)
+        .switchMap { (_, sortBy, sortOrder) ->
+            movieRepository.getAllMovies(sortBy!!, sortOrder!!)
         }
-
-        Log.i("FUUUUUUUUCK", "YEEEEEEEEEEEEEEEEEEAAAAAAAAAAAAAH")
-        Log.i("FUUUUUUUUCK sortBy", sortBy.orEmpty())
-        Log.i("FUUUUUUUUCK sortOrder", sortOrder.orEmpty())
-
-        return@map if (sharedPreferencesUtils.isSortByTitle()) {
-            if (sharedPreferencesUtils.isSortOrderAsc()) movies.sortedBy { it.title } else movies.sortedByDescending { it.title }
-        } else if (sharedPreferencesUtils.isSortByYear()) {
-            if (sharedPreferencesUtils.isSortOrderAsc()) movies.sortedBy { it.year } else movies.sortedByDescending { it.year }
-        } else {
-            movies
-        }
-    }
 }

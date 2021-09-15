@@ -4,7 +4,7 @@ import androidx.lifecycle.LiveData
 
 interface MovieDao {
 
-    fun getAllMovies(): LiveData<List<Movie>>
+    fun getAllMovies(sortBy: String, sortOrder: String): LiveData<List<Movie>>
 
     suspend fun insertMovie(movie: Movie)
 

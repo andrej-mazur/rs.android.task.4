@@ -7,7 +7,6 @@ import com.example.watchlist.db.MovieRepository
 import com.example.watchlist.db.helper.MovieOpenHelperDatabase
 import com.example.watchlist.db.room.MovieRoomDatabase
 import com.example.watchlist.di.ServiceLocator
-import com.example.watchlist.util.SharedPreferencesUtils
 
 class App : Application() {
 
@@ -16,7 +15,6 @@ class App : Application() {
 
         ServiceLocator.register<Context>(this)
         ServiceLocator.register(PreferenceManager.getDefaultSharedPreferences(ServiceLocator.locate()))
-        ServiceLocator.register(SharedPreferencesUtils(ServiceLocator.locate()))
         ServiceLocator.register(MovieRoomDatabase.create(ServiceLocator.locate()))
         ServiceLocator.register(MovieOpenHelperDatabase.create(ServiceLocator.locate()))
         ServiceLocator.register(MovieRepository(ServiceLocator.locate(), ServiceLocator.locate()))

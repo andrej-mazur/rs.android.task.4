@@ -23,13 +23,14 @@ class MovieOpenHelperDao private constructor(db: MovieOpenHelperDatabase) : Movi
         dbChangeListener.postValue(0)
     }
 
-    override fun getAllMovies(): LiveData<List<Movie>> {
-        return dbChangeListener.map { getAllMoviesInner() }
+    override fun getAllMovies(sortBy: String, sortOrder: String): LiveData<List<Movie>> {
+        return dbChangeListener.map { getAllMoviesInner(sortBy, sortOrder) }
     }
 
-    private fun getAllMoviesInner(): List<Movie> {
+    private fun getAllMoviesInner(sortBy: String, sortOrder: String): List<Movie> {
         val projection = arrayOf(COLUMN_NAME_ID, COLUMN_NAME_TITLE, COLUMN_NAME_YEAR)
-        val cursor = readableDatabase.query(TABLE_NAME, projection, null, null, null, null, null)
+        val sort = "$sortBy $sortOrder"
+        val cursor = readableDatabase.query(TABLE_NAME, projection, null, null, null, null, sort)
         val movies = mutableListOf<Movie>()
         with(cursor) {
             while (moveToNext()) {

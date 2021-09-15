@@ -55,7 +55,7 @@ class MainFragment : Fragment() {
             }
         }
 
-        mainViewModel.sortedMovies.observe(viewLifecycleOwner, { movies ->
+        mainViewModel.movies.observe(viewLifecycleOwner, { movies ->
             movieAdapter.submitList(movies)
         })
     }
